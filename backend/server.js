@@ -32,6 +32,6 @@ server.get("/products", async (request, response) => {
         const products = await Product.find();
         response.send(products);
     }catch(error){
-        server.status(500).send({message: error.message});
+        responce.status(500).send({message: error.message});
     }
 });

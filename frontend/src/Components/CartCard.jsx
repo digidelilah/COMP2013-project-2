@@ -23,7 +23,7 @@ export default function CartCard({
           handleRemoveQuantity={handleRemoveQuantity}
           mode="cart"
         />
-        {/* <h3>x {quantity}</h3> */}
+        <h3>x {quantity}</h3>
       </div>
 
       <div>

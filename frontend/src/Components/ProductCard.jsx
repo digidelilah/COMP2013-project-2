@@ -16,7 +16,7 @@ export default function ProductCard({
       <h3>{productName}</h3>
       <img src={image} alt="" />
       <h4>{brand}</h4>
-      {/* <div className="ProductQuantityDiv">
+      <div className="ProductQuantityDiv">
         <div onClick={() => handleRemoveQuantity(id)} className="QuantityBtn">
           <p>➖</p>
         </div>
@@ -25,7 +25,7 @@ export default function ProductCard({
         <div onClick={() => handleAddQuantity(id)} className="QuantityBtn">
           <p>➕</p>
         </div>
-      </div> */}
+      </div>
       <QuantityCounter
         handleAddQuantity={handleAddQuantity}
         productQuantity={productQuantity}
