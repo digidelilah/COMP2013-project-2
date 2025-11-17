@@ -6,11 +6,7 @@ import NavBar from "./NavBar";
 import ProductForm from "./ProductForm";
 
 export default function GroceriesAppContainer() {
-  //useEffects
-  useEffect(() => {
-    handleProductsDB();
-  }, [postResponse]); //run array once on load
-
+  
   //states
   //setting products from db
   const [products, setProducts] = useState([]);
@@ -26,6 +22,11 @@ export default function GroceriesAppContainer() {
     price: "",
   });
   const [postResponse, setPostResponse] = useState("");
+
+  //useEffects
+  useEffect(() => {
+    handleProductsDB();
+  }, [postResponse]); //run array once on load
 
   //handelers
   //connecting to products db
