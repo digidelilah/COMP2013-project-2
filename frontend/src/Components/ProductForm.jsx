@@ -1,5 +1,5 @@
 export default function ProductForm({
-    productName,
+    name,
     brand,
     image,
     price,
@@ -10,11 +10,11 @@ export default function ProductForm({
         <div>
             <h2>Product Form</h2>
             <form onSubmit={handleOnSubmit}>
-                <label htmlFor="productName"></label>
+                <label htmlFor="name"></label>
                 <input 
                     type="text" 
-                    id="productName" 
-                    name="productName" 
+                    id="name" 
+                    name="name" 
                     value={productName}
                     onChange={handleOnChange}
                     placeholder="Product Name"

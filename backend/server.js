@@ -38,9 +38,9 @@ server.get("/products", async (request, response) => {
 
 //add new product
 server.post("/products", async (request, response) => {
-    const{ productName, brand, image, price } = request.body;
+    const{ name, brand, image, price } = request.body;
     const newProduct = new Product({
-        productName,
+        name,
         product:{ brand, price},
         image
     });

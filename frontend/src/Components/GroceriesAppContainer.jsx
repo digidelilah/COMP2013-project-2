@@ -20,7 +20,7 @@ export default function GroceriesAppContainer() {
   const [cartList, setCartList] = useState([]);
   // add from form 
   const [formData, setFormData] = useState({
-    productName: "",
+    name: "",
     brand: "",
     image: "",
     price: "",
@@ -133,7 +133,7 @@ export default function GroceriesAppContainer() {
  //handle on change of form inputs
  const handleOnChange = (e) => {
   setFormData((prevData)=>{
-    return {...prevData,[e.target.productName]:e.target.value};
+    return {...prevData,[e.target.name]:e.target.value};
   });
  };
 
@@ -144,7 +144,7 @@ export default function GroceriesAppContainer() {
       <NavBar quantity={cartList.length} />
       <div className="GroceriesApp-Container">
         <ProductForm 
-          productName={formData.productName}
+          productName={formData.name}
           brand={formData.brand}
           image={formData.image}
           price={formData.price}
