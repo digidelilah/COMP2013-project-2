@@ -1,37 +1,48 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import CartContainer from "./CartContainer";
 import ProductsContainer from "./ProductsContainer";
 import NavBar from "./NavBar";
+import ProductForm from "./ProductForm";
 
 export default function GroceriesAppContainer() {
   //useEffects
   useEffect(() => {
     handleProductsDB();
-  }, []);//run array once on load
+  }, []); //run array once on load
 
   //states
   //setting products from db
   const [products, setProducts] = useState([]);
- //setting quantity for each product
-  const [productQuantity, setProductQuantity] = useState(
-    products.map((product) => ({ id: product.id, quantity: 0 }))
-  );
+  //setting quantity for each product
+  const [productQuantity, setProductQuantity] = useState({}); //use an empty object at the start
   //setting cart list
   const [cartList, setCartList] = useState([]);
+  // add from form 
+  const [formData, setFormData] = useState({
+    productName: "",
+    brand: "",
+    image: "",
+    price: "",
+  });
 
   //handelers
   //connecting to products db
-  const handleProductsDB = async () =>{
+  //GET data from db handler
+  const handleProductsDB = async () => {
     try {
-        const response = await axios.get("http://localhost:3000/products");
-        console.log(response);
-        setProducts(response.data);
-    }catch (error) {
-      console.log(error.message)
+      const response = await axios.get("http://localhost:3000/products");
+
+      console.log(response);
+      setProducts(response.data);
+      setProductQuantity(
+        response.data.map((product) => ({ id: product.id, quantity: 0 }))
+      ); //this is the new line to initilize the productQuantity after fetching the products.
+    } catch (error) {
+      console.log(error.message);
       console.error("Error fetching products:", error);
     }
-  }
+  };
 
   const handleAddQuantity = (productId, mode) => {
     if (mode === "cart") {
@@ -105,12 +116,41 @@ export default function GroceriesAppContainer() {
     setCartList([]);
   };
 
+  //form handlers
+  
+
+ //handle submission of data to db
+  const handleOnSubmit = async () => {
+    try{
+      await axios.post("http://localhost:3000/products",formData)
+      .then((response)=>console.log(response));
+      
+    }catch(error){
+      console.log(error.message);
+    }
+  };
+
+ //handle on change of form inputs
+ const handleOnChange = (e) => {
+  setFormData((prevData)=>{
+    return {...prevData,[e.target.productName]:e.target.value};
+  });
+ };
+
   //reders
 
   return (
     <div>
       <NavBar quantity={cartList.length} />
       <div className="GroceriesApp-Container">
+        <ProductForm 
+          productName={formData.productName}
+          brand={formData.brand}
+          image={formData.image}
+          price={formData.price}
+          handleOnSubmit={handleOnSubmit}
+          handleOnChange={handleOnChange}
+        />
         <ProductsContainer
           products={products}
           handleAddQuantity={handleAddQuantity}
@@ -125,6 +165,7 @@ export default function GroceriesAppContainer() {
           handleRemoveQuantity={handleRemoveQuantity}
           handleClearCart={handleClearCart}
         />
+        
       </div>
     </div>
   );

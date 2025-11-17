@@ -35,3 +35,19 @@ server.get("/products", async (request, response) => {
         responce.status(500).send({message: error.message});
     }
 });
+
+//add new product
+server.post("/products", async (request, response) => {
+    const{ productName, brand, image, price } = request.body;
+    const newProduct = new Product({
+        productName,
+        product:{ brand, price},
+        image
+    });
+    try{
+        await newProduct.save();
+        response.status(200).send({message: "Product added successfully"});
+    }catch(error){
+        response.status(400).send({message: error.message});
+    }
+});

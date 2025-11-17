@@ -6,12 +6,13 @@ export default function ProductsContainer({
   handleRemoveQuantity,
   handleAddToCart,
   productQuantity,
+  
 }) {
   return (
     <div className="ProductsContainer">
       {products.map((product) => (
         <ProductCard
-          key={product.id}
+          key={product._id} //use _id instead of id as some of the products won't have an id and it will throw a missing key prop error
           {...product}
           handleAddQuantity={handleAddQuantity}
           handleRemoveQuantity={handleRemoveQuantity}
