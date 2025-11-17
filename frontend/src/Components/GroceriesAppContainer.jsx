@@ -20,7 +20,7 @@ export default function GroceriesAppContainer() {
   const [cartList, setCartList] = useState([]);
   // add from form 
   const [formData, setFormData] = useState({
-    name: "",
+    productName: "",
     brand: "",
     image: "",
     price: "",
@@ -144,7 +144,7 @@ export default function GroceriesAppContainer() {
       <NavBar quantity={cartList.length} />
       <div className="GroceriesApp-Container">
         <ProductForm 
-          productName={formData.name}
+          productName={formData.productName}
           brand={formData.brand}
           image={formData.image}
           price={formData.price}
