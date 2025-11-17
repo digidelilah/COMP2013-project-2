@@ -9,7 +9,7 @@ export default function GroceriesAppContainer() {
   //useEffects
   useEffect(() => {
     handleProductsDB();
-  }, []); //run array once on load
+  }, [postResponse]); //run array once on load
 
   //states
   //setting products from db
@@ -25,6 +25,7 @@ export default function GroceriesAppContainer() {
     image: "",
     price: "",
   });
+  const [postResponse, setPostResponse] = useState("");
 
   //handelers
   //connecting to products db
@@ -123,7 +124,7 @@ export default function GroceriesAppContainer() {
   const handleOnSubmit = async () => {
     try{
       await axios.post("http://localhost:3000/products",formData)
-      .then((response)=>console.log(response));
+      .then((response)=>setPostResponse(response.data.message));
       
     }catch(error){
       console.log(error.message);

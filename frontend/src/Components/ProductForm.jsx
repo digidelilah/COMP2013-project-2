@@ -1,5 +1,5 @@
 export default function ProductForm({
-    name,
+    productName,
     brand,
     image,
     price,
