@@ -6,7 +6,6 @@ import NavBar from "./NavBar";
 import ProductForm from "./ProductForm";
 
 export default function GroceriesAppContainer() {
-  
   //states
   //setting products from db
   const [products, setProducts] = useState([]);
@@ -14,7 +13,7 @@ export default function GroceriesAppContainer() {
   const [productQuantity, setProductQuantity] = useState({}); //use an empty object at the start
   //setting cart list
   const [cartList, setCartList] = useState([]);
-  // add from form 
+  // add from form
   const [formData, setFormData] = useState({
     productName: "",
     brand: "",
@@ -27,7 +26,6 @@ export default function GroceriesAppContainer() {
   useEffect(() => {
     handleProductsDB();
   }, [postResponse]); //run array once on load
-
   //handelers
   //connecting to products db
   //GET data from db handler
@@ -119,25 +117,25 @@ export default function GroceriesAppContainer() {
   };
 
   //form handlers
-  
 
- //handle submission of data to db
-  const handleOnSubmit = async () => {
-    try{
-      await axios.post("http://localhost:3000/products",formData)
-      .then((response)=>setPostResponse(response.data.message));
-      
-    }catch(error){
+  //handle submission of data to db
+  const handleOnSubmit = async (e) => {
+    e.preventDefault(); //this is essential to prevent the page from refreshing and losing your data before posting
+    try {
+      await axios
+        .post("http://localhost:3000/products", formData)
+        .then((response) => setPostResponse(response.data.message));
+    } catch (error) {
       console.log(error.message);
     }
   };
 
- //handle on change of form inputs
- const handleOnChange = (e) => {
-  setFormData((prevData)=>{
-    return {...prevData,[e.target.name]:e.target.value};
-  });
- };
+  //handle on change of form inputs
+  const handleOnChange = (e) => {
+    setFormData((prevData) => {
+      return { ...prevData, [e.target.name]: e.target.value };
+    });
+  };
 
   //reders
 
@@ -145,7 +143,7 @@ export default function GroceriesAppContainer() {
     <div>
       <NavBar quantity={cartList.length} />
       <div className="GroceriesApp-Container">
-        <ProductForm 
+        <ProductForm
           productName={formData.productName}
           brand={formData.brand}
           image={formData.image}
@@ -167,7 +165,6 @@ export default function GroceriesAppContainer() {
           handleRemoveQuantity={handleRemoveQuantity}
           handleClearCart={handleClearCart}
         />
-        
       </div>
     </div>
   );
