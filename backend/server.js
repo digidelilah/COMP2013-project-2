@@ -67,7 +67,7 @@ server.delete("/products/:id",async (request, response) => {
   const { id } = request.params;
   try{
     await Product.findByIdAndDelete(id);
-    response.send({message: `${productName} deleted successfully`});
+    response.send({message: `Product was deleted successfully`});
   }catch(error){
     response.status(400).send({ message: error.message });
   }
