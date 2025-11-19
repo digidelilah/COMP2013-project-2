@@ -4,7 +4,8 @@ export default function ProductForm({
     image,
     price,
     handleOnSubmit,
-    handleOnChange
+    handleOnChange,
+    isEditing,
 }) {
     return (
         <div>
@@ -54,7 +55,7 @@ export default function ProductForm({
                     required
                 />
                 <br/>
-                <button type="submit">Add Product</button>
+                <button>{isEditing?"Edit Product":"Add Product"}</button>
             </form>
         </div>
     );

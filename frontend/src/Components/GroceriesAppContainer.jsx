@@ -21,6 +21,8 @@ export default function GroceriesAppContainer() {
     price: "",
   });
   const [postResponse, setPostResponse] = useState("");
+  //editing flag
+  const [isEditing, setIsEditing] = useState(false);
 
   //useEffects
   useEffect(() => {
@@ -138,10 +140,32 @@ export default function GroceriesAppContainer() {
         brand: productToEdit.data.brand,
         image: productToEdit.data.image,
         price: productToEdit.data.price,
+        _id: productToEdit.data._id
       });
+      setIsEditing(true);
     }catch(error){
       console.log(error.message);
     }
+  };
+
+  //handle the update after editing
+  const handleOnUpdate = async (id) => {
+    try{
+      const result = await axios.patch(`http://localhost:3000/products/${id}`, formData);
+      setPostResponse(result.data.message);
+    }catch(error){
+      console.log(error.message);
+    }
+  };
+
+  //handle resetting the form after submission
+  const handleResetForm = () => {
+    setFormData({
+      productName: "",
+      brand: "",
+      image: "",
+      price: "",
+    });
   };
 
   //form handlers
@@ -150,9 +174,17 @@ export default function GroceriesAppContainer() {
   const handleOnSubmit = async (e) => {
     e.preventDefault(); //this is essential to prevent the page from refreshing and losing your data before posting
     try {
-      await axios
+      if(isEditing){
+        handleOnUpdate(formData._id);
+        handleResetForm();
+        setIsEditing(false);
+      }else{
+        await axios
         .post("http://localhost:3000/products", formData)
-        .then((response) => setPostResponse(response.data.message));
+        .then((response) => setPostResponse(response.data.message))
+        .then(()=> handleResetForm());
+      }
+      
     } catch (error) {
       console.log(error.message);
     }
@@ -181,7 +213,7 @@ export default function GroceriesAppContainer() {
           price={formData.price}
           handleOnSubmit={handleOnSubmit}
           handleOnChange={handleOnChange}
-          
+           isEditing={isEditing}
         />
         <p className="Form_Response">{postResponse}</p>
         </div>
@@ -193,6 +225,7 @@ export default function GroceriesAppContainer() {
           productQuantity={productQuantity}
           handleOnDelete={handleOnDelete}
           handleOnEdit={handleOnEdit}
+         
         />
         <CartContainer
           cartList={cartList}

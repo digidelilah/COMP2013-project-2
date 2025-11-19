@@ -56,7 +56,7 @@ server.post("/products", async (request, response) => {
     });
     console.log("New product to save:", newProduct);
     await newProduct.save();
-    response.status(200).send({ message: `Product added successfully with ${id} `});
+    response.status(200).send({ message: `${productName} added successfully with ${id} `});
   } catch (error) {
     response.status(400).send({ message: error.message });
   }
@@ -67,7 +67,7 @@ server.delete("/products/:id",async (request, response) => {
   const { id } = request.params;
   try{
     await Product.findByIdAndDelete(id);
-    response.send({message: `Product deleted successfully with the ${id}`});
+    response.send({message: `${productName} deleted successfully`});
   }catch(error){
     response.status(400).send({ message: error.message });
   }
@@ -79,6 +79,24 @@ server.get("/contacts/:id", async (request, response) => {
   try{
     const productToEdit = await Product.findById(id);
     response.send(productToEdit);
+  }catch(error){
+    response.status(500).send({message: error.message});
+  }
+});
+
+//patch request to edit a product
+server.patch("/products/:id", async (request, response) => {
+  const{id} = request.params;
+  const{productName, brand, image, price} = request.body;
+  try{
+    await Product.findByIdAndUpdate(id, {
+      productName,
+      brand,
+      image,
+      price
+    });
+    response.send({message: `${productName} updated successfully`});
+  
   }catch(error){
     response.status(500).send({message: error.message});
   }
