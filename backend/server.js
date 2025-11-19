@@ -7,6 +7,7 @@ require("dotenv").config();
 const { DB_URI } = process.env;
 const cors = require("cors"); //disable default browser security
 const Product = require("./models/products"); //import product model schema
+const { request } = require("http");
 
 //middleware
 server.use(express.json());
@@ -57,6 +58,17 @@ server.post("/products", async (request, response) => {
     await newProduct.save();
     response.status(200).send({ message: "Product added successfully" });
   } catch (error) {
+    response.status(400).send({ message: error.message });
+  }
+});
+
+//delete a product
+server.delete("/products/:id",async (request, response) => {
+  const { id } = request.params;
+  try{
+    await Product.findByIdAndDelete(id);
+    response.send({message: `Product deleted successfully with the ${id}`});
+  }catch(error){
     response.status(400).send({ message: error.message });
   }
 });

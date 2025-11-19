@@ -116,6 +116,17 @@ export default function GroceriesAppContainer() {
     setCartList([]);
   };
 
+  //handle delete product
+  const handleOnDelete = async (id) => {
+    try{
+      const response = await axios.delete(`http://localhost:3000/products/${id}`);
+      setPostResponse(response.data.message);
+      console.log(response)
+    }catch(error){
+      console.log(error.message);
+    }
+  };
+
   //form handlers
 
   //handle submission of data to db
@@ -137,6 +148,8 @@ export default function GroceriesAppContainer() {
     });
   };
 
+  
+
   //reders
 
   return (
@@ -157,6 +170,7 @@ export default function GroceriesAppContainer() {
           handleRemoveQuantity={handleRemoveQuantity}
           handleAddToCart={handleAddToCart}
           productQuantity={productQuantity}
+          handleOnDelete={handleOnDelete}
         />
         <CartContainer
           cartList={cartList}

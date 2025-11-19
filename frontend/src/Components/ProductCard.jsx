@@ -10,6 +10,7 @@ export default function ProductCard({
   handleRemoveQuantity,
   handleAddToCart,
   id,
+  handleOnDelete,
 }) {
   return (
     <div className="ProductCard">
@@ -35,6 +36,8 @@ export default function ProductCard({
       />
       <h3>{price}</h3>
       <button onClick={() => handleAddToCart(id)}>Add to Cart</button>
+      <button onClick={() => handleOnDelete(id)}>Delete</button>
+      
     </div>
   );
 }
