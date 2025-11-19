@@ -26,6 +26,7 @@ export default function GroceriesAppContainer() {
   useEffect(() => {
     handleProductsDB();
   }, [postResponse]); //run array once on load
+
   //handelers
   //connecting to products db
   //GET data from db handler
@@ -127,6 +128,22 @@ export default function GroceriesAppContainer() {
     }
   };
 
+  //handle edit product
+  const handleOnEdit = async (id) => {
+    try{
+      const productToEdit = await axios.get(`http://localhost:3000/products/${id}`);
+      console.log(productToEdit);
+      setFormData({ 
+        productName: productToEdit.data.productName,
+        brand: productToEdit.data.brand,
+        image: productToEdit.data.image,
+        price: productToEdit.data.price,
+      });
+    }catch(error){
+      console.log(error.message);
+    }
+  };
+
   //form handlers
 
   //handle submission of data to db
@@ -156,6 +173,7 @@ export default function GroceriesAppContainer() {
     <div>
       <NavBar quantity={cartList.length} />
       <div className="GroceriesApp-Container">
+        <div className="Form">
         <ProductForm
           productName={formData.productName}
           brand={formData.brand}
@@ -163,7 +181,10 @@ export default function GroceriesAppContainer() {
           price={formData.price}
           handleOnSubmit={handleOnSubmit}
           handleOnChange={handleOnChange}
+          
         />
+        <p className="Form_Response">{postResponse}</p>
+        </div>
         <ProductsContainer
           products={products}
           handleAddQuantity={handleAddQuantity}
@@ -171,6 +192,7 @@ export default function GroceriesAppContainer() {
           handleAddToCart={handleAddToCart}
           productQuantity={productQuantity}
           handleOnDelete={handleOnDelete}
+          handleOnEdit={handleOnEdit}
         />
         <CartContainer
           cartList={cartList}

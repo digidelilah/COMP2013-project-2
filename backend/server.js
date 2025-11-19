@@ -56,7 +56,7 @@ server.post("/products", async (request, response) => {
     });
     console.log("New product to save:", newProduct);
     await newProduct.save();
-    response.status(200).send({ message: "Product added successfully" });
+    response.status(200).send({ message: `Product added successfully with ${id} `});
   } catch (error) {
     response.status(400).send({ message: error.message });
   }
@@ -70,5 +70,16 @@ server.delete("/products/:id",async (request, response) => {
     response.send({message: `Product deleted successfully with the ${id}`});
   }catch(error){
     response.status(400).send({ message: error.message });
+  }
+});
+
+//to get product by id for editing
+server.get("/contacts/:id", async (request, response) => {
+  const {id} = request.params;
+  try{
+    const productToEdit = await Product.findById(id);
+    response.send(productToEdit);
+  }catch(error){
+    response.status(500).send({message: error.message});
   }
 });

@@ -18,6 +18,7 @@ export default function ProductForm({
                     value={productName}
                     onChange={handleOnChange}
                     placeholder="Product Name"
+                    required
                 />
                 <br/>
                 <label htmlFor="brand"></label>
@@ -28,6 +29,7 @@ export default function ProductForm({
                     value={brand} 
                     onChange={handleOnChange}
                     placeholder="Brand"
+                    required
                 />
                 <br/>
                 <label htmlFor="image"></label>
@@ -38,6 +40,7 @@ export default function ProductForm({
                     value={image} 
                     onChange={handleOnChange}
                     placeholder="Image URL"
+                    required
                 />
                 <br/>   
                 <label htmlFor="price"></label>
@@ -48,6 +51,7 @@ export default function ProductForm({
                     value={price}
                     onChange={handleOnChange}
                     placeholder="Price"
+                    required
                 />
                 <br/>
                 <button type="submit">Add Product</button>
