@@ -74,7 +74,7 @@ server.delete("/products/:id",async (request, response) => {
 });
 
 //to get product by id for editing
-server.get("/contacts/:id", async (request, response) => {
+server.get("/products/:id", async (request, response) => {
   const {id} = request.params;
   try{
     const productToEdit = await Product.findById(id);
@@ -95,7 +95,7 @@ server.patch("/products/:id", async (request, response) => {
       image,
       price
     });
-    response.send({message: `${productName} updated successfully`});
+    response.send({message: `${productName} updated successfully with id: ${id}`});
   
   }catch(error){
     response.status(500).send({message: error.message});

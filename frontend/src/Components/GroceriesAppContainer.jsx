@@ -215,7 +215,7 @@ export default function GroceriesAppContainer() {
           handleOnChange={handleOnChange}
            isEditing={isEditing}
         />
-        <p className="Form_Response">{postResponse}</p>
+        <p>{postResponse}</p>
         </div>
         <ProductsContainer
           products={products}
